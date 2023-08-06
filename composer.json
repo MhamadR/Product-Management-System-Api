@@ -1,0 +1,17 @@
+{
+    "name": "mhama/test-assignment-api",
+    "autoload": {
+        "psr-4": {
+            "Mhama\\TestAssignmentApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mhamad Raslan",
+            "email": "mhamadraslan@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
