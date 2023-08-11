@@ -16,7 +16,22 @@ class ProductController
                 // cast json_decode to array will return empty array instead of null
                 //  when it is invalid or has no data
                 $data = (array) json_decode(file_get_contents("php://input"), true);
+
+                // Sanitize the input
                 $sanitizedData = $this->sanitizeInput($data);
+                if (!$sanitizedData) break;
+
+                // DELETE inside POST if "ids" property is set
+                if (array_key_exists("ids", $data)) {
+                    // Convert array of ids to a comma-separated string
+                    $idList = implode(",", $sanitizedData['ids']);
+                    // Delete products and associated records
+                    $result = $this->gateway->deleteProducts($idList);
+
+                    http_response_code(200);
+                    echo json_encode($result);
+                    break;
+                }
 
                 // Check if there are input errors
                 $errors = $this->getValidationErrors($sanitizedData);
@@ -68,26 +83,22 @@ class ProductController
                 ]);
                 break;
 
-            case "DELETE":
-                // Get data from the request body
-                $data = (array) json_decode(file_get_contents("php://input"), true);
-                $sanitizedData = $this->sanitizeInput($data);
+                /*
+                case "DELETE":
+                    // Get data from the request body
+                    $data = (array) json_decode(file_get_contents("php://input"), true);
+                    $sanitizedData = $this->sanitizeInput($data);
+                    if (!$sanitizedData) break;
 
-                // Check if the "ids" array is present and is an array
-                if (!isset($sanitizedData["ids"]) || !is_array($sanitizedData["ids"])) {
-                    http_response_code(400); // Bad Request
-                    echo json_encode(["message" => "Invalid request data"]);
+                    // Convert array of ids to a comma-separated string
+                    $idList = implode(",", $sanitizedData['ids']);
+                    // Delete products and associated records
+                    $result = $this->gateway->deleteProducts($idList);
+
+                    http_response_code(200);
+                    echo json_encode($result);
                     break;
-                }
-
-                // Convert array of ids to a comma-separated string
-                $idList = implode(",", $sanitizedData['ids']);
-                // Delete products and associated records
-                $result = $this->gateway->deleteProducts($idList);
-
-                http_response_code(200);
-                echo json_encode($result);
-                break;
+                */
 
             default:
                 http_response_code(405);
@@ -100,10 +111,20 @@ class ProductController
         $sanitizedData = [];
         $validAttributes = $this->gateway->getAttributes();
 
+        if (array_key_exists("ids", $data)) {
+            // Check if the "ids" array is present and is an array
+            if (!isset($data["ids"]) || !is_array($data["ids"])) {
+                http_response_code(400); // Bad Request
+                echo json_encode(["message" => "Invalid request data. 'ids' must be an array of strings"]);
+                return [];
+            } else {
+                $sanitizedData["ids"] = array_map('intval', $data["ids"]);
+                return $sanitizedData;
+            }
+        }
+
         foreach ($data as $key => $value) {
-            if ($key === "ids") {
-                $sanitizedData[$key] = array_map('intval', $value);
-            } else if (in_array($key, $validAttributes) || $key === "price") {
+            if (in_array($key, $validAttributes) || $key === "price") {
                 $sanitizedData[$key] = filter_var(trim($value), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             } else {
                 $sanitizedData[$key] = filter_var(trim($value), FILTER_SANITIZE_SPECIAL_CHARS);
@@ -155,7 +176,7 @@ class ProductController
         $extraKeys = array_diff(array_keys($data), $allowedKeys);
         if (!empty($extraKeys)) {
             foreach ($extraKeys as $key) {
-                $errors[$key] = "Invalid key: $key";
+                $errors[$key] = "Invalid key $key";
             }
         }
 
