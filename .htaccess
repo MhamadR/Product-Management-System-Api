@@ -1,12 +1,2 @@
 RewriteEngine On
-# RewriteBase /test-assignment/backend/ # Set the base URL to the correct directory
-
-# Redirect /api/products and /api/add-products to index.php
-# RewriteRule ^test-assignment/backend/api/products$ index.php [L]
-# RewriteRule ^test-assignment/backend/api/add-products$ index.php [L]
-
-# All other requests should be handled by React Router
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule ^ index.php [L]
 RewriteRule . index.php

@@ -32,13 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 
 // Divide the Request URI string into an array of substrings based on the separator "/"
-// $parts = explode("/", $_SERVER["REQUEST_URI"]);
+$parts = explode("/", $_SERVER["REQUEST_URI"]);
 
 // Throw 404 code when the URI is different than "/products" and "/add-product"
-// if ($parts[2] !== "products" && $parts[2] !== "add-product") {
-//     http_response_code(404);
-//     exit;
-// }
+// Change to $parts[1] on deployment
+if ($parts[2] !== "products" && $parts[2] !== "add-product") {
+    http_response_code(404);
+    exit;
+}
 
 $database = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
 
