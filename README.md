@@ -30,7 +30,7 @@ To test the backend locally, follow these steps:
 6. Configure Web Server.
    For local testing, you can use the built-in PHP development server or your preferred web server.
 7. Access the API.
-   Access the API using your preferred API client (e.g., Postman, cURL) at http://localhost:8000.
+   Access the API using your preferred API client (e.g., Postman, cURL) at http://localhost/test-assignment-api/products.
 
    API Endpoints:
    GET /products: Get a list of all products.
