@@ -34,6 +34,7 @@ To test the backend locally, follow these steps:
 
    API Endpoints:
    GET /products: Get a list of all products.
+   ```
    [{
       "id":1,
       "sku": "JVC200123",
@@ -42,7 +43,9 @@ To test the backend locally, follow these steps:
       "type": "DVD",
       "size": "700.00"
    },]
+   ```
    POST /products: Add a new product.
+   ```
    {
       "sku": "JVC200123",
       "name": "Acme Disc",
@@ -50,8 +53,13 @@ To test the backend locally, follow these steps:
       "type": "DVD",
       "size": "700"
    }
+   ```
    DELETE /products: Delete products based on an array of IDs.
-   {"ids": ["1", "2"]}
+   ```
+   {
+      "ids": ["1", "2"]
+   }
+   ```
 
 ##Hosting Information
 The backend API is hosted at: https://assignment00011.000webhostapp.com/products
