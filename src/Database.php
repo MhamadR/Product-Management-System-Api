@@ -1,5 +1,9 @@
 <?php
 
+namespace TestAssignment\Api;
+
+use PDO;
+
 class database
 {
     public function __construct(

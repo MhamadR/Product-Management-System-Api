@@ -3,21 +3,19 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
+use TestAssignment\Api\database;
+use TestAssignment\Api\ErrorHandler;
+use TestAssignment\Api\ProductController;
+use TestAssignment\Api\ProductGateway;
 
 require_once('vendor/autoload.php');
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-spl_autoload_register(function ($class) {
-    $classFile = __DIR__ . "/src/$class.php";
-    if (file_exists($classFile)) {
-        require $classFile;
-    }
-});
+set_error_handler([ErrorHandler::class, 'handleError']);
+set_exception_handler([ErrorHandler::class, 'handleException']);
 
-set_error_handler("ErrorHandler::handleError");
-set_exception_handler("ErrorHandler::handleException");
 
 header("Content-type: application/json; charset=UTF-8");
 // Enable CORS headers

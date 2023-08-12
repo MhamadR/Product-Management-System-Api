@@ -1,5 +1,9 @@
 <?php
 
+namespace TestAssignment\Api;
+
+use PDO;
+
 class ProductGateway
 {
     private PDO $conn;

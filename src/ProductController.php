@@ -1,5 +1,7 @@
 <?php
 
+namespace TestAssignment\Api;
+
 class ProductController
 {
     public function __construct(private ProductGateway $gateway)
