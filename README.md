@@ -34,13 +34,21 @@ To test the backend locally, follow these steps:
 
    API Endpoints:
    GET /products: Get a list of all products.
+   [{
+      "id":1,
+      "sku": "JVC200123",
+      "name": "Acme Disc",
+      "price": "1.00",
+      "type": "DVD",
+      "size": "700.00"
+   },]
    POST /products: Add a new product.
    {
-        "sku": "JVC200123",
-        "name": "Acme Disc",
-        "price": "1",
-        "type": "DVD",
-        "size": "700"
+      "sku": "JVC200123",
+      "name": "Acme Disc",
+      "price": "1",
+      "type": "DVD",
+      "size": "700"
    }
    DELETE /products: Delete products based on an array of IDs.
    {"ids": ["1", "2"]}
