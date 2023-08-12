@@ -32,9 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 // Divide the Request URI string into an array of substrings based on the separator "/"
 $parts = explode("/", $_SERVER["REQUEST_URI"]);
 
-// Throw 404 code when the URI is different than "/products" and "/add-product"
-// Change to $parts[1] on deployment
-if ($parts[2] !== "products" && $parts[2] !== "add-product") {
+// Throw 404 code when the URI is different than "/products or "/products/"
+if ($parts[2] !== "products" || (isset($parts[3]) && $parts[3] !== "")) {
     http_response_code(404);
     exit;
 }
