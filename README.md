@@ -61,7 +61,7 @@ To test the backend locally, follow these steps:
    }
    ```
 
-##Hosting Information
+## Hosting Information
 The backend API is hosted at: https://assignment00011.000webhostapp.com/products
 
 Please note that the hosting provider, 000webhost.com, does not fully support the DELETE method. Therefore, the DELETE logic has been implemented within the POST method for compatibility.
