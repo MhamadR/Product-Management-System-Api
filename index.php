@@ -3,10 +3,11 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
-use TestAssignment\src\database;
 use TestAssignment\src\ErrorHandler;
-use TestAssignment\src\ProductController;
+use TestAssignment\src\database;
 use TestAssignment\src\ProductGateway;
+use TestAssignment\src\ProductController;
+use TestAssignment\src\ProductRepository;
 
 require_once('vendor/autoload.php');
 
@@ -42,6 +43,8 @@ $database = new Database($_ENV['DB_HOST'], $_ENV['DB_NAME'], $_ENV['DB_USER'], $
 
 $gateway = new ProductGateway($database);
 
-$controller = new ProductController($gateway);
+$repository = new ProductRepository($gateway);
+
+$controller = new ProductController($repository);
 
 $controller->processRequest($_SERVER["REQUEST_METHOD"]);
