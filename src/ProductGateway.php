@@ -4,7 +4,7 @@ namespace TestAssignment\src;
 
 use PDO;
 
-class ProductGateway
+class ProductGateway implements ProductGatewayInterface
 {
     private PDO $conn;
 

@@ -4,7 +4,7 @@ namespace TestAssignment\src;
 
 class ProductController
 {
-    public function __construct(private ProductGateway $gateway)
+    public function __construct(private ProductGatewayInterface $gateway)
     {
     }
 
