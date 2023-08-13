@@ -12,6 +12,7 @@
     }
   ],
   "require": {
-    "vlucas/phpdotenv": "^5.5"
+    "vlucas/phpdotenv": "^5.5",
+    "laminas/laminas-diactoros": "^3.1"
   }
 }
