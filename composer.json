@@ -2,7 +2,7 @@
   "name": "mhama/test-assignment-api",
   "autoload": {
     "psr-4": {
-      "TestAssignment\\Api\\": "src/"
+      "TestAssignment\\src\\": "src/"
     }
   },
   "authors": [

@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use Dotenv\Dotenv;
-use TestAssignment\Api\database;
-use TestAssignment\Api\ErrorHandler;
-use TestAssignment\Api\ProductController;
-use TestAssignment\Api\ProductGateway;
+use TestAssignment\src\database;
+use TestAssignment\src\ErrorHandler;
+use TestAssignment\src\ProductController;
+use TestAssignment\src\ProductGateway;
 
 require_once('vendor/autoload.php');
 

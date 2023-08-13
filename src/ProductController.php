@@ -1,6 +1,6 @@
 <?php
 
-namespace TestAssignment\Api;
+namespace TestAssignment\src;
 
 class ProductController
 {
