@@ -34,7 +34,7 @@ class ProductValidator implements ProductValidatorInterface
         }
 
         // Check if product type is valid
-        if (!in_array($data["type"], $validTypes)) {
+        if (isset($data["type"]) && !in_array($data["type"], $validTypes)) {
             $errors["type"] = "Invalid product type";
         }
 
