@@ -4,7 +4,7 @@ namespace TestAssignment\src;
 
 use PDO;
 
-class database
+class Database
 {
     public function __construct(
         private $host,

@@ -6,7 +6,7 @@ use Dotenv\Dotenv;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 use TestAssignment\src\ErrorHandler;
-use TestAssignment\src\database;
+use TestAssignment\src\Database;
 use TestAssignment\src\ProductGateway;
 use TestAssignment\src\ProductController;
 use TestAssignment\src\ProductRepository;
