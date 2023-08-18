@@ -44,6 +44,29 @@ class ProductGateway implements ProductGatewayInterface
             $attributes = explode(',', $row['attributes']);
             $values = explode(',', $row['attribute_values']);
 
+            // Combine attributes and values into an associative array
+            $attributesWithValues = array_combine($attributes, $values);
+
+            $desiredOrder = ['height', 'width', 'length'];
+            uksort($attributesWithValues, function ($a, $b) use ($desiredOrder) {
+                $indexA = array_search($a, $desiredOrder);
+                $indexB = array_search($b, $desiredOrder);
+
+                // If both attributes are in the desired order array, sort them based on the order
+                if ($indexA !== false && $indexB !== false) {
+                    return $indexA - $indexB;
+                }
+
+                // If one or both attributes are not in the desired order array, sort them alphabetically
+                if ($indexA === false && $indexB === false) {
+                    return strcasecmp($a, $b); // Alphabetical sorting for non-desired attributes
+                }
+
+                // Place desired attributes ahead of non-desired attributes
+                return $indexA !== false ? -1 : 1;
+            });
+
+
             $productData = [
                 'id' => $row['id'],
                 'sku' => $row['sku'],
@@ -52,9 +75,9 @@ class ProductGateway implements ProductGatewayInterface
                 'type' => $row['type']
             ];
 
-            // Add attributes and their values to the product data
-            for ($i = 0; $i < count($attributes); $i++) {
-                $productData[$attributes[$i]] = $values[$i];
+            // Add sorted attributes and values to the product data
+            foreach ($attributesWithValues as $attribute => $value) {
+                $productData[$attribute] = $value;
             }
 
             $data[] = $productData;
