@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Dotenv\Dotenv;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\StreamFactory;
 use TestAssignment\src\ErrorHandler;
 use TestAssignment\src\Database;
 use TestAssignment\src\ProductGateway;
@@ -17,22 +18,36 @@ require_once('vendor/autoload.php');
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$errorHandler = new ErrorHandler();
-
-header("Content-type: application/json; charset=UTF-8");
-// Enable CORS headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+$errorHandler = new ErrorHandler(true);
 
 $request = ServerRequestFactory::fromGlobals();
 $response = new Response();
 
-// Check if it's a preflight request
-if ($request->getMethod() === "OPTIONS") {
-    header("HTTP/1.1 204 No Content");
+$allowedOrigins = ['']; // Allow requests from the origin such as the host url and proxies
+$origin = $request->getHeaderLine('Origin');
+
+if (in_array($origin, $allowedOrigins)) {
+    // Set CORS headers
+    $response = $response->withHeader('Access-Control-Allow-Origin', $origin);
+    $response = $response->withHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    $response = $response->withHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Check if it's a preflight request
+    if ($request->getMethod() === "OPTIONS") {
+        header("HTTP/1.1 204 No Content", true, 204);
+        exit();
+    }
+} else {
+    $responseBody = json_encode(['message' => 'Forbidden']);
+    $stream = new StreamFactory();
+    $response = $response
+        ->withStatus(403) // Forbidden
+        ->withHeader('Content-Type', 'application/json')
+        ->withBody($stream->createStream($responseBody));
+    echo $response->getBody();
     exit();
 }
+
 
 // Divide the Request URI string into an array of substrings based on the separator "/"
 $parts = explode("/", $request->getUri()->getPath());
