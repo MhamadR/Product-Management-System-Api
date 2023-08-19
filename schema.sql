@@ -31,7 +31,7 @@ CREATE TABLE product_attribute_associations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     attribute_id INT NOT NULL,
-    value DECIMAL(10, 2) NOT NULL,
+    value DECIMAL(10, 0) NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (attribute_id) REFERENCES product_attributes(id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
