@@ -23,7 +23,7 @@ $errorHandler = new ErrorHandler(true);
 $request = ServerRequestFactory::fromGlobals();
 $response = new Response();
 
-$allowedOrigins = ['']; // Allow requests from the origin such as the host url and proxies
+$allowedOrigins = ["", "https://product-management-system-001.netlify.app", "http://localhost:5173"];
 $origin = $request->getHeaderLine('Origin');
 
 if (in_array($origin, $allowedOrigins)) {
