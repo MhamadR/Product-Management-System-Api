@@ -18,7 +18,7 @@ require_once('vendor/autoload.php');
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$errorHandler = new ErrorHandler(true);
+$errorHandler = new ErrorHandler();
 
 $request = ServerRequestFactory::fromGlobals();
 $response = new Response();
